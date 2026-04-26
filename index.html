@@ -1,0 +1,804 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Core Maths: Simultaneous Equations Terminal</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <!-- MathJax for LaTeX Rendering -->
+    <script>
+        window.MathJax = {
+            tex: { inlineMath: [['$', '$'], ['\\(', '\\)']], displayMath: [['$$', '$$'], ['\\[', '\\]']] },
+            svg: { fontCache: 'global' }
+        };
+    </script>
+    <script id="MathJax-script" async src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js"></script>
+    <style>
+        @import url('https://fonts.googleapis.com/css2?family=Fira+Code:wght@400;500&family=Inter:wght@300;400;600;700&family=Great+Vibes&family=Cinzel:wght@700&display=swap');
+        .clip-ribbon { clip-path: polygon(0 0, 100% 0, 100% 80%, 50% 100%, 0 80%); }
+.serif-title { font-family: 'Cinzel', serif; }
+
+        body { font-family: 'Inter', sans-serif; scroll-behavior: smooth; }
+        .math-font { font-family: 'serif'; }
+        .tab-content { display: none; }
+        .tab-content.active { display: block; }
+        .scratchpad-canvas { cursor: crosshair; touch-action: none; }
+        .dok-badge { font-size: 0.65rem; padding: 2px 8px; border-radius: 999px; font-weight: bold; text-transform: uppercase; }
+        .dok-1 { background: #dcfce7; color: #166534; }
+        .dok-2 { background: #dbeafe; color: #1e40af; }
+        .dok-3 { background: #fef9c3; color: #854d0e; }
+        .dok-4 { background: #fee2e2; color: #991b1b; }
+    @media print {
+    /* Hide everything on the page including the main app and backgrounds */
+    body > *:not(#certificate-modal) {
+        display: none !important;
+    }
+
+    /* Make sure the modal background is white, not dark/transparent */
+    #certificate-modal {
+        position: absolute;
+        left: 0;
+        top: 0;
+        background: white !important;
+        width: 100%;
+        height: 100%;
+        display: block !important;
+    }
+
+    /* Hide the buttons on the printed page */
+    .no-print {
+        display: none !important;
+    }
+
+    /* Force the certificate to be full width */
+    #printable-area {
+        width: 100% !important;
+        max-width: none !important;
+        margin: 0 !important;
+        border: 2px solid #1e3a8a !important; /* A clean border for the PDF */
+        box-shadow: none !important;
+    }
+}
+
+
+    </style>
+</head>
+<body class="bg-slate-50 text-slate-900">
+
+    <!-- Header Navigation -->
+    <nav class="bg-indigo-900 text-white sticky top-0 z-50 shadow-md">
+        <div class="max-w-7xl mx-auto px-4 py-3 flex flex-wrap justify-between items-center">
+            <div class="flex items-center space-x-2">
+                <span class="text-xl font-bold tracking-tight">CORE MATHS <span class="text-indigo-300">SHS 2</span></span>
+            </div>
+            <div class="flex space-x-1 md:space-x-4 overflow-x-auto">
+                <button onclick="showTab('notes')" class="px-3 py-1 rounded hover:bg-indigo-800 transition text-sm font-medium">Notes</button>
+                <button onclick="showTab('quiz')" class="px-3 py-1 rounded hover:bg-indigo-800 transition text-sm font-medium">50-Question Quiz</button>
+                <button onclick="showTab('visualizer')" class="px-3 py-1 rounded hover:bg-indigo-800 transition text-sm font-medium">Graph Visualizer</button>
+                <button onclick="toggleModal('formula-popup')" class="px-3 py-1 bg-amber-500 text-black rounded text-sm font-bold">Formulas</button>
+            </div>
+        </div>
+    </nav>
+
+    <main class="max-w-5xl mx-auto px-4 py-8">
+        
+        <!-- SECTION 1: NOTES -->
+        <div id="notes" class="tab-content active space-y-12">
+            
+            <header class="text-center space-y-2 mb-12">
+                <h1 class="text-4xl font-black text-slate-900">Zakaria Abdallah's Guide to Simultaneous Equations</h1>
+                <p class="text-xl text-indigo-700 font-semibold italic">SHS Year 2 Core Mathematics</p>
+                <div class="w-24 h-1 bg-indigo-600 mx-auto mt-4"></div>
+            </header>
+
+            <!-- 1. Foundations -->
+            <section class="bg-white p-8 rounded-2xl shadow-sm border border-slate-200">
+                <h2 class="text-2xl font-bold text-indigo-900 mb-6 flex items-center">
+                    <span class="w-8 h-8 bg-indigo-100 text-indigo-600 rounded-full flex items-center justify-center mr-3 text-sm">1</span>
+                    Foundations of Algebraic Reasoning
+                </h2>
+                <div class="prose prose-slate max-w-none space-y-4 text-slate-700">
+                    <p>In your SHS Year 1 studies, you mastered the resolution of single-variable linear equations—scenarios where one unknown was isolated to find a specific value. As we advance into Year 2 Core Mathematics, we transition to <strong>Simultaneous Equations</strong>. We define these as a system of two or more equations sharing common variables that must be solved in tandem. The goal is to discover the "common truth": the unique set of values that satisfies every equation in the system at the exact same moment.</p>
+                    <p>As a Lead Examiner, I view these systems not just as algebra, but as a vital "logic toolkit." Mastery of this topic is essential for navigating the complex resource management problems found in economics, engineering, and the sciences. It represents the mathematical bridge between abstract symbols and real-world constraints.</p>
+                    <div class="bg-indigo-50 p-6 rounded-xl border-l-4 border-indigo-500 mt-6">
+                        <h3 class="font-bold text-indigo-900 mb-4 text-lg">Key Ideas</h3>
+                        <ul class="space-y-3">
+                            <li><strong>Linear Equation:</strong> A mathematical statement describing a straight-line relationship between two variables.</li>
+                            <li><strong>Coefficient:</strong> The numerical multiplier placed before a variable (e.g., in $4x$, the coefficient is $4$).</li>
+                            <li><strong>Intersection Point:</strong> The precise coordinate where two lines meet on a graph. This point represents the "Common Truth" where both equations are satisfied.</li>
+                        </ul>
+                    </div>
+                    <p class="mt-4">Understanding these concepts allows us to move beyond basic theory into the rigorous calculation methods required for the WASSCE.</p>
+                </div>
+            </section>
+
+            <!-- 2. Elimination Method -->
+            <section class="bg-white p-8 rounded-2xl shadow-sm border border-slate-200">
+                <h2 class="text-2xl font-bold text-indigo-900 mb-6 flex items-center">
+                    <span class="w-8 h-8 bg-indigo-100 text-indigo-600 rounded-full flex items-center justify-center mr-3 text-sm">2</span>
+                    The Elimination Method: The Art of Matching and Removing
+                </h2>
+                <div class="prose prose-slate max-w-none space-y-4 text-slate-700">
+                    <p>The Elimination Method is a strategic process of simplification. By manipulating the equations to ensure one variable has matching coefficients, we can add or subtract the equations to make that variable "disappear." This collapses a two-variable system into a one-variable equation, which is far simpler to solve.</p>
+                    
+                    <h3 class="font-bold text-slate-900 text-lg border-b pb-2">The 6-Step Elimination Workflow (Activity 2.2)</h3>
+                    <ol class="list-decimal pl-6 space-y-2 font-medium">
+                        <li><strong>Align:</strong> Arrange the equations vertically so that like variables ($x, y$) and constants are in clear columns.</li>
+                        <li><strong>Match:</strong> Manipulate the equations (usually through multiplication) so that the coefficients of one variable have the same magnitude.</li>
+                        <li><strong>Add/Subtract:</strong> If the signs of the matching coefficients are different, <strong>Add</strong> the equations. If the signs are the same, <strong>Subtract</strong> them.</li>
+                        <li><strong>Solve:</strong> Calculate the value of the remaining variable.</li>
+                        <li><strong>Substitute:</strong> Place this value back into either of the original equations.</li>
+                        <li><strong>Solve:</strong> Find the value of the second variable.</li>
+                    </ol>
+
+                    <div class="bg-slate-900 text-slate-100 p-8 rounded-xl my-8 font-mono text-sm leading-relaxed">
+                        <h4 class="text-amber-400 font-bold mb-4 uppercase tracking-widest text-xs">Worked Example (Source Activity 2.2)</h4>
+                        <p class="mb-4">Problem: Solve $2x + 3y = 12$ and $4x - 3y = 6$.</p>
+                        <ul class="space-y-4">
+                            <li><span class="text-indigo-400">Step 1: Align:</span><br>Equation 1: $2x + 3y = 12$<br>Equation 2: $4x - 3y = 6$</li>
+                            <li><span class="text-indigo-400">Step 2: Match:</span> The $y$ coefficients are already matched in magnitude ($3$ and $-3$).</li>
+                            <li><span class="text-indigo-400">Step 3:</span> Since signs are different ($+$ and $-$), we <strong>Add</strong>: $(2x + 4x) + (3y - 3y) = 12 + 6 \rightarrow 6x = 18$</li>
+                            <li><span class="text-indigo-400">Step 4: Solve for $x$:</span> $x = 3$.</li>
+                            <li><span class="text-indigo-400">Step 5: Substitute $x = 3$ into Equation 1:</span> $2(3) + 3y = 12 \rightarrow 6 + 3y = 12$</li>
+                            <li><span class="text-indigo-400">Step 6: Solve for $y$:</span> $3y = 6$, therefore $y = 2$.</li>
+                        </ul>
+                    </div>
+
+                    <div class="bg-red-50 border-l-4 border-red-500 p-6 rounded-r-xl">
+                        <p><strong>Examiner's Note: The Subtraction Trap</strong> Be extremely careful when subtracting equations where one term is already negative. Remember that subtracting a negative is equivalent to addition (e.g., $3y - (-3y) = 6y$). This is where the majority of WASSCE candidates lose "Accuracy Marks."</p>
+                    </div>
+
+                    <p class="italic text-indigo-900 font-semibold bg-indigo-50 p-4 rounded-lg">The "So What?" Layer: In the high-pressure environment of a timed exam, identifying which variable is easiest to eliminate can save you 2 to 3 minutes per question. Look for coefficients that are already identical or are simple multiples of one another.</p>
+                </div>
+            </section>
+
+            <!-- 3. Substitution Method -->
+            <section class="bg-white p-8 rounded-2xl shadow-sm border border-slate-200">
+                <h2 class="text-2xl font-bold text-indigo-900 mb-6 flex items-center">
+                    <span class="w-8 h-8 bg-indigo-100 text-indigo-600 rounded-full flex items-center justify-center mr-3 text-sm">3</span>
+                    The Substitution Method: The Power of Variable Exchange
+                </h2>
+                <div class="prose prose-slate max-w-none space-y-4 text-slate-700">
+                    <p>The Substitution Method relies on "redefining" variables. Instead of removing a variable, we express one variable in terms of the other, effectively using it as a placeholder to reduce the system to a single-variable problem.</p>
+                    
+                    <h3 class="font-bold text-slate-900 text-lg border-b pb-2">The 5-Step Substitution Workflow</h3>
+                    <ol class="list-decimal pl-6 space-y-2">
+                        <li><strong>Rearrange:</strong> Isolate one variable in one equation to make it the subject.</li>
+                        <li><strong>Substitute:</strong> Plug this new expression into the other equation.</li>
+                        <li><strong>Simplify:</strong> Clear brackets and group like terms.</li>
+                        <li><strong>Solve:</strong> Find the value of the first variable.</li>
+                        <li><strong>Verify:</strong> Confirm the result by testing it in the original equations.</li>
+                    </ol>
+
+                    <div class="bg-slate-50 border-2 border-dashed border-slate-300 p-8 rounded-xl my-6">
+                        <h4 class="font-bold text-indigo-700 mb-4">Coach’s Perspective: Activity 2.5</h4>
+                        <p class="mb-4">Problem: Solve $2x + 3y = 12$ and $x - y = 1$.</p>
+                        <p class="mb-4">In this scenario, the "smarter" move is to rearrange Equation 2 ($x - y = 1$). Why? Because $x$ and $y$ have coefficients of $1$ (or $-1$). Isolating a variable with a coefficient of $1$ prevents the introduction of complex fractions early in the calculation, keeping your algebra clean and error-free.</p>
+                        <ul class="space-y-2 font-mono text-sm bg-white p-4 rounded shadow-inner">
+                            <li>Rearrange Eq 2: $x = y + 1$</li>
+                            <li>Substitute into Eq 1: $2(y + 1) + 3y = 12$</li>
+                            <li>Simplify: $2y + 2 + 3y = 12 \rightarrow 5y + 2 = 12$</li>
+                            <li>Solve for $y$: $5y = 10 \rightarrow y = 2$</li>
+                            <li>Find $x$: $x = 2 + 1 = 3$</li>
+                        </ul>
+                    </div>
+                    
+                    <p><strong>Contrast:</strong> While Elimination is robust for large coefficients, Substitution is your most efficient tool when at least one variable is "naked" (has a coefficient of $1$).</p>
+                </div>
+            </section>
+
+            <!-- 4. Graphical Method -->
+            <section class="bg-white p-8 rounded-2xl shadow-sm border border-slate-200">
+                <h2 class="text-2xl font-bold text-indigo-900 mb-6 flex items-center">
+                    <span class="w-8 h-8 bg-indigo-100 text-indigo-600 rounded-full flex items-center justify-center mr-3 text-sm">4</span>
+                    The Graphical Method: Visualizing the Solution
+                </h2>
+                <div class="prose prose-slate max-w-none space-y-4 text-slate-700">
+                    <p>Mathematics is a visual discipline. Every linear equation is a geometric line, and their intersection is the physical manifestation of the system's solution. To graph these, we use the Slope-Intercept Form: $y = mx + c$, where $m$ represents the gradient (steepness) and $c$ represents the $y$-intercept.</p>
+                    
+                    <h3 class="font-bold text-slate-900 text-lg">Building Tables of Values (Activity 2.6)</h3>
+                    <p>Before plotting, you must generate coordinates. For the system $y = 2x + 1$ and $y = -x + 4$:</p>
+                    
+                    <div class="grid md:grid-cols-2 gap-6 my-6">
+                        <div class="overflow-hidden rounded-lg border border-slate-200">
+                            <table class="w-full text-center border-collapse">
+                                <caption class="bg-slate-100 p-2 font-bold text-sm">Table 2.1: $y = 2x + 1$</caption>
+                                <tr class="border-b">
+                                    <th class="p-2 border-r bg-slate-50">$x$</th>
+                                    <td class="p-2">$0$</td>
+                                    <td class="p-2">$1$</td>
+                                    <td class="p-2">$2$</td>
+                                </tr>
+                                <tr>
+                                    <th class="p-2 border-r bg-slate-50">$y$</th>
+                                    <td class="p-2">$1$</td>
+                                    <td class="p-2">$3$</td>
+                                    <td class="p-2">$5$</td>
+                                </tr>
+                            </table>
+                        </div>
+                        <div class="overflow-hidden rounded-lg border border-slate-200">
+                            <table class="w-full text-center border-collapse">
+                                <caption class="bg-slate-100 p-2 font-bold text-sm">Table 2.2: $y = -x + 4$</caption>
+                                <tr class="border-b">
+                                    <th class="p-2 border-r bg-slate-50">$x$</th>
+                                    <td class="p-2">$0$</td>
+                                    <td class="p-2">$1$</td>
+                                    <td class="p-2">$2$</td>
+                                </tr>
+                                <tr>
+                                    <th class="p-2 border-r bg-slate-50">$y$</th>
+                                    <td class="p-2">$4$</td>
+                                    <td class="p-2">$3$</td>
+                                    <td class="p-2">$2$</td>
+                                </tr>
+                            </table>
+                        </div>
+                    </div>
+
+                    <h3 class="font-bold text-slate-900 text-lg">Interpreting the Visual Result</h3>
+                    <ul class="list-disc pl-6 space-y-2">
+                        <li><strong>Single Intersection:</strong> Lines cross at one point, indicating one unique solution (e.g., $(1, 3)$).</li>
+                        <li><strong>Parallel Lines:</strong> Lines never meet, indicating no solution.</li>
+                        <li><strong>Overlapping Lines:</strong> The lines are identical, indicating infinite solutions.</li>
+                    </ul>
+                </div>
+            </section>
+
+            <!-- 5. Real-Life Modeling -->
+            <section class="bg-white p-8 rounded-2xl shadow-sm border border-slate-200">
+                <h2 class="text-2xl font-bold text-indigo-900 mb-6 flex items-center">
+                    <span class="w-8 h-8 bg-indigo-100 text-indigo-600 rounded-full flex items-center justify-center mr-3 text-sm">5</span>
+                    Real-Life Modeling: Translating the Market to Mathematics
+                </h2>
+                <div class="prose prose-slate max-w-none space-y-4 text-slate-700">
+                    <p>Modeling is the bridge between a descriptive story and a solvable graph. In the West African context, this is the language of trade and agriculture.</p>
+                    
+                    <h3 class="font-bold text-slate-900 text-lg">Scenarios from the Field</h3>
+                    <ul class="space-y-4">
+                        <li class="bg-white border p-4 rounded-lg shadow-sm">
+                            <h5 class="font-bold text-indigo-600">The Fruit Trade (Activity 2.9)</h5>
+                            To solve Sarah and John's purchase of apples and bananas, we must set up equations based on their total spend.
+                        </li>
+                        <li class="bg-white border p-4 rounded-lg shadow-sm">
+                            <h5 class="font-bold text-indigo-600">The Agricultural Sector (Activity 2.11)</h5>
+                            In the Northern Region, a farmer sells $2$ bags of maize ($x$) and $1$ bag of soybeans ($y$) for Gh¢$150$. If $x$ is known to be Gh¢$40$, the model $2(40) + y = 150$ reveals the soybean price as Gh¢$70$.
+                        </li>
+                        <li class="bg-white border p-4 rounded-lg shadow-sm">
+                            <h5 class="font-bold text-indigo-600">Chinderi Market (Activity 2.12)</h5>
+                            Nana Okoegye Abraham, Chief of Chinderi, bought $10$ fruits (pineapples $x$ and mangoes $y$) for Gh¢$24$. Given pineapples cost Gh¢$2$ and mangoes Gh¢$3$:
+                            <ul class="pl-6 mt-2 italic">
+                                <li>Equation 1: $x + y = 10$</li>
+                                <li>Equation 2: $2x + 3y = 24$</li>
+                                <li>Result: $6$ pineapples and $4$ mangoes.</li>
+                            </ul>
+                        </li>
+                    </ul>
+
+                    <div class="bg-amber-100 border-l-4 border-amber-600 p-6 rounded-r-xl">
+                        <p><strong>Pro-Tip: Defining the Unit Price</strong> The most common error in modeling is failing to define the variable correctly. Always state: "Let $x$ be the price per unit of maize." If you mix up quantity and unit price, your entire model will fail.</p>
+                    </div>
+                </div>
+            </section>
+
+            <!-- 6. Examiner's Playbook -->
+            <section class="bg-white p-8 rounded-2xl shadow-sm border border-slate-200">
+                <h2 class="text-2xl font-bold text-indigo-900 mb-6 flex items-center">
+                    <span class="w-8 h-8 bg-indigo-100 text-indigo-600 rounded-full flex items-center justify-center mr-3 text-sm">6</span>
+                    The Examiner’s Playbook: Structuring Your Exam Answers
+                </h2>
+                <div class="prose prose-slate max-w-none space-y-4 text-slate-700">
+                    <p>In the WASSCE Core Mathematics Section B paper, simultaneous equation questions typically carry between $8$ and $12$ marks. Examiners award "Method Marks" (M) for your logical flow and "Accuracy Marks" (A) for correct values. A "Good" student finds the answer; an "Excellent" student makes it impossible for the examiner to dock marks.</p>
+                    
+                    <h3 class="font-bold text-slate-900 text-lg">The Perfect Answer Template</h3>
+                    <ol class="list-decimal pl-6 space-y-3">
+                        <li><strong>Define Variables:</strong> "Let $x = \text{cost per plantain}$ and $y = \text{cost per tomato}$."</li>
+                        <li><strong>State Equations:</strong> Write them out and label them clearly as Equation 1 and Equation 2.</li>
+                        <li><strong>Show Method:</strong> Explicitly write: "Using the Elimination Method..." or "Substituting Eq 2 into Eq 1."</li>
+                        <li><strong>Step-by-Step Execution:</strong> Show all algebraic steps. Never skip the division step.</li>
+                        <li><strong>Final Statement:</strong> Provide context. "Therefore, the cost of one tomato is Gh¢$2.00$."</li>
+                        <li><strong>The Verification Check:</strong> Briefly show LHS = RHS to prove your work is correct.</li>
+                    </ol>
+
+                    <div class="bg-indigo-900 text-white p-6 rounded-xl mt-8">
+                        <p><strong>Examiner's Note: Labeling is Key</strong> Consistently labeling your equations is the hallmark of an organized mind. It allows me to follow your logic even if you make a calculation error, ensuring you still walk away with substantial partial credit.</p>
+                    </div>
+
+                    <p class="text-center font-bold text-lg mt-8 text-indigo-800">With these strategies, you are prepared to excel in Section 2 of the curriculum and secure high marks in your final examinations. Keep practicing the "Chinderi Market" and "Fruit Trade" models—they are the blueprints for success.</p>
+                </div>
+            </section>
+        </div>
+
+        <!-- SECTION 2: 50-QUESTION QUIZ -->
+<div id="quiz" class="tab-content">
+    <div class="bg-white p-8 rounded-2xl shadow-lg border border-slate-200">
+
+        <!-- Progress Bar -->
+        <div class="fixed top-0 left-0 w-full bg-gray-200 h-3 z-50">
+            <div id="progress-bar" class="bg-indigo-600 h-3" style="width:0%"></div>
+        </div>
+
+        <div class="flex justify-between items-center mb-6 border-b pb-4">
+            <h2 class="text-2xl font-bold text-indigo-900">Comprehensive Mastery Quiz</h2>
+            <div class="text-sm font-bold text-slate-600">
+                Progress: <span id="progress-text">0/50</span>
+            </div>
+        </div>
+
+        <div class="grid grid-cols-2 gap-4">
+    <div class="flex justify-between p-2 bg-white rounded shadow-sm border border-slate-200">
+        <span>DOK 1</span>
+        <span id="dok1-score" class="font-bold text-indigo-600">0/15</span>
+    </div>
+    <div class="flex justify-between p-2 bg-white rounded shadow-sm border border-slate-200">
+        <span>DOK 2</span>
+        <span id="dok2-score" class="font-bold text-indigo-600">0/15</span>
+    </div>
+    <div class="flex justify-between p-2 bg-white rounded shadow-sm border border-slate-200">
+        <span>DOK 3</span>
+        <span id="dok3-score" class="font-bold text-indigo-600">0/10</span>
+    </div>
+    <div class="flex justify-between p-2 bg-white rounded shadow-sm border border-slate-200">
+        <span>DOK 4</span>
+        <span id="dok4-score" class="font-bold text-indigo-600">0/10</span>
+    </div>
+</div>
+
+                <!-- Quiz Progress Bar -->
+                <div class="w-full bg-slate-100 h-2 rounded-full mb-8 overflow-hidden">
+                    <div id="quiz-progress" class="bg-indigo-600 h-full w-0 transition-all duration-300"></div>
+                </div>
+
+                <div id="quiz-container" class="space-y-6">
+                    <!-- Questions generated via JS -->
+                </div>
+
+                <div class="mt-12 flex justify-between">
+                    <button id="prev-btn" onclick="prevQuestion()" class="px-6 py-2 bg-slate-200 rounded-lg font-bold opacity-50 cursor-not-allowed">Previous</button>
+                    <button id="next-btn" onclick="nextQuestion()" class="px-6 py-2 bg-indigo-600 text-white rounded-lg font-bold">Next</button>
+                </div>
+            </div>
+        </div>
+
+        <!-- SECTION 3: GRAPH VISUALIZER -->
+        <div id="visualizer" class="tab-content">
+            <div class="bg-white p-8 rounded-2xl shadow-lg border border-slate-200">
+                <h2 class="text-2xl font-bold text-indigo-900 mb-6">Interactive Geometry Diagram</h2>
+                <p class="text-slate-600 mb-8 italic">Visualize the "Common Truth" by adjusting the lines below.</p>
+                
+                <div class="grid md:grid-cols-3 gap-8">
+                    <div class="space-y-6">
+                        <div class="p-4 bg-indigo-50 rounded-xl border border-indigo-100">
+                            <h4 class="font-bold text-indigo-800 mb-4">Line 1: $y = m_1x + c_1$</h4>
+                            <div class="space-y-4">
+                                <div>
+                                    <label class="block text-xs font-bold text-slate-500 uppercase mb-1">Gradient ($m_1$)</label>
+                                    <input type="range" id="m1" min="-5" max="5" step="0.5" value="2" class="w-full h-2 bg-indigo-200 rounded-lg appearance-none cursor-pointer">
+                                    <span id="m1-val" class="text-xs font-mono">2</span>
+                                </div>
+                                <div>
+                                    <label class="block text-xs font-bold text-slate-500 uppercase mb-1">Y-Intercept ($c_1$)</label>
+                                    <input type="range" id="c1" min="-10" max="10" step="1" value="1" class="w-full h-2 bg-indigo-200 rounded-lg appearance-none cursor-pointer">
+                                    <span id="c1-val" class="text-xs font-mono">1</span>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="p-4 bg-rose-50 rounded-xl border border-rose-100">
+                            <h4 class="font-bold text-rose-800 mb-4">Line 2: $y = m_2x + c_2$</h4>
+                            <div class="space-y-4">
+                                <div>
+                                    <label class="block text-xs font-bold text-slate-500 uppercase mb-1">Gradient ($m_2$)</label>
+                                    <input type="range" id="m2" min="-5" max="5" step="0.5" value="-1" class="w-full h-2 bg-rose-200 rounded-lg appearance-none cursor-pointer">
+                                    <span id="m2-val" class="text-xs font-mono">-1</span>
+                                </div>
+                                <div>
+                                    <label class="block text-xs font-bold text-slate-500 uppercase mb-1">Y-Intercept ($c_2$)</label>
+                                    <input type="range" id="c2" min="-10" max="10" step="1" value="4" class="w-full h-2 bg-rose-200 rounded-lg appearance-none cursor-pointer">
+                                    <span id="c2-val" class="text-xs font-mono">4</span>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="p-4 bg-slate-900 text-white rounded-xl">
+                            <h4 class="font-bold text-amber-400 mb-2">Intersection</h4>
+                            <p class="text-xs mono" id="intersection-point">Solution: (1.0, 3.0)</p>
+                        </div>
+                    </div>
+
+                    <div class="md:col-span-2 relative bg-white border border-slate-300 rounded-xl overflow-hidden" id="svg-host">
+                        <svg id="coordinate-plane" viewBox="0 0 400 400" class="w-full h-full">
+                            <!-- Grid -->
+                            <defs>
+                                <pattern id="grid" width="20" height="20" patternUnits="userSpaceOnUse">
+                                    <path d="M 20 0 L 0 0 0 20" fill="none" stroke="#f1f5f9" stroke-width="1"/>
+                                </pattern>
+                            </defs>
+                            <rect width="100%" height="100%" fill="url(#grid)" />
+                            
+                            <!-- Axis -->
+                            <line x1="200" y1="0" x2="200" y2="400" stroke="#cbd5e1" stroke-width="2" />
+                            <line x1="0" y1="200" x2="400" y2="200" stroke="#cbd5e1" stroke-width="2" />
+                            
+                            <!-- Plot Lines -->
+                            <line id="svg-line-1" x1="0" y1="0" x2="400" y2="400" stroke="#4f46e5" stroke-width="3" />
+                            <line id="svg-line-2" x1="0" y1="0" x2="400" y2="400" stroke="#e11d48" stroke-width="3" />
+                            
+                            <!-- Intersection Point -->
+                            <circle id="svg-point" cx="200" cy="200" r="5" fill="#f59e0b" stroke="white" stroke-width="2" />
+                        </svg>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </main>
+    
+<div id="certificate-modal" class="hidden fixed inset-0 bg-slate-900/90 backdrop-blur-md z-[150] flex items-center justify-center p-4">
+    <div id="printable-area" class="relative w-full max-w-5xl h-[650px] bg-[#002B5B] overflow-hidden shadow-2xl">
+       
+        <div class="absolute inset-0 border-[16px] border-[#D4AF37] z-10"></div>
+        <div class="absolute inset-[24px] border-4 border-[#D4AF37] opacity-40 z-10"></div>
+
+        <div class="relative z-20 h-full flex flex-col items-center justify-between py-12 px-20 text-center text-white">
+            
+            <div class="space-y-2">
+                <h4 class="serif-title text-[#D4AF37] text-xl tracking-[0.3em] uppercase">SHS MATHEMATICS INSTITUTE</h4>
+                <div class="w-32 h-[2px] bg-[#D4AF37] mx-auto my-4"></div>
+                <h1 class="serif-title text-5xl tracking-widest text-white uppercase mb-2">Certificate</h1>
+                <p class="text-lg tracking-[0.5em] text-[#D4AF37] font-light uppercase">of Achievement</p>
+            </div>
+
+            <div class="space-y-6">
+                <p class="italic font-serif text-xl opacity-80">This award is proudly presented to</p>
+                <h2 id="student-name-output" class="text-6xl font-bold text-white border-b-4 border-[#D4AF37] inline-block px-12 pb-2 mb-4">Student Name</h2>
+                <p class="text-lg max-w-2xl mx-auto leading-relaxed">
+                    For demonstrating exceptional mastery and academic excellence in the field of 
+                    <span class="text-[#D4AF37] font-bold">Simultaneous Equations</span> within the 
+                    Core Mathematics SHS 2 curriculum.
+                </p>
+            </div>
+
+            <div class="flex justify-center items-center gap-16">
+                <div class="flex flex-col items-center">
+                    <div class="w-24 h-24 rounded-full border-4 border-[#D4AF37] bg-[#001F41] flex flex-col items-center justify-center">
+                        <span class="text-xs uppercase text-[#D4AF37]">Grade</span>
+                        <span id="cert-grade-badge" class="text-2xl font-black text-white">--</span>
+                    </div>
+                </div>
+
+                <div class="relative">
+                    <div class="w-32 h-32 rounded-full bg-gradient-to-br from-[#D4AF37] via-[#F9E29C] to-[#B8860B] shadow-2xl flex items-center justify-center border-4 border-[#002B5B]">
+                        <div class="w-24 h-24 rounded-full border-2 border-[#002B5B]/20 flex items-center justify-center">
+                            <span class="text-[#002B5B] font-black text-center leading-none text-xs">MATHEMATICS<br>EXCELLENCE</span>
+                        </div>
+                    </div>
+                    <div class="absolute top-[90%] left-1/2 -translate-x-1/2 flex gap-1">
+                        <div class="w-4 h-16 bg-[#B8860B] clip-ribbon"></div>
+                        <div class="w-4 h-16 bg-[#B8860B] clip-ribbon"></div>
+                    </div>
+                </div>
+
+                <div class="flex flex-col items-center">
+                    <div class="w-24 h-24 rounded-full border-4 border-[#D4AF37] bg-[#001F41] flex flex-col items-center justify-center">
+                        <span class="text-xs uppercase text-[#D4AF37]">Score</span>
+                        <span id="cert-score-badge" class="text-2xl font-black text-white">0/50</span>
+                    </div>
+                </div>
+            </div>
+
+            <div class="w-full flex justify-between items-end mt-8 px-10">
+                <div class="text-center">
+                    <p class="text-2xl italic mb-1" style="font-family: 'Great Vibes', cursive; color: #D4AF37;">Zakaria Abdallah</p>
+                    <div class="w-48 h-[1px] bg-[#D4AF37] mx-auto mb-2"></div>
+                    <p class="text-xs uppercase tracking-widest text-[#D4AF37]">Lead Instructor</p>
+                </div>
+                <div class="text-center">
+                    <p class="text-sm font-mono mb-2" id="cert-date">Date</p>
+                    <div class="w-48 h-[1px] bg-[#D4AF37] mx-auto mb-2"></div>
+                    <p class="text-xs uppercase tracking-widest text-[#D4AF37]">Date of Issue</p>
+                </div>
+            </div>
+        </div>
+
+        <div class="absolute bottom-4 left-0 w-full flex justify-center gap-4 no-print z-30">
+            <button onclick="location.reload()" class="px-6 py-2 bg-white/10 hover:bg-white/20 text-white border border-white/20 rounded-lg font-bold transition">Restart</button>
+            <button onclick="window.print()" class="px-6 py-2 bg-[#D4AF37] text-[#002B5B] rounded-lg font-bold hover:bg-[#F9E29C] transition">Print Certificate</button>
+        </div>
+    </div>
+</div>
+
+    <!-- FLOATING SCRATCHPAD -->
+    <div id="scratchpad-container" class="fixed bottom-6 right-6 z-40 group">
+        <button onclick="toggleScratchpad()" class="bg-indigo-600 text-white w-14 h-14 rounded-full shadow-2xl flex items-center justify-center hover:scale-110 transition active:scale-95">
+            <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+              <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15.232 5.232l3.536 3.536m-2.036-5.036a2.5 2.5 0 113.536 3.536L6.5 21.036H3v-3.572L16.732 3.732z" />
+            </svg>
+        </button>
+        <div id="scratchpad-window" class="hidden absolute bottom-20 right-0 bg-white w-80 md:w-96 rounded-2xl shadow-2xl border border-slate-300 overflow-hidden">
+            <div class="bg-slate-800 text-white p-3 flex justify-between items-center">
+                <span class="text-xs font-bold uppercase tracking-wider">Scratchpad</span>
+                <button onclick="clearScratchpad()" class="text-[10px] bg-red-500 px-2 py-1 rounded">Clear</button>
+            </div>
+            <canvas id="scratchpad" class="scratchpad-canvas w-full h-64 bg-slate-50"></canvas>
+            <div class="p-2 bg-white text-[10px] text-slate-400 italic text-center">Use your mouse/stylus to calculate.</div>
+        </div>
+    </div>
+
+    <!-- MODALS -->
+    <div id="formula-popup" class="hidden fixed inset-0 bg-black/60 backdrop-blur-sm z-[100] flex items-center justify-center p-6" onclick="toggleModal('formula-popup')">
+        <div class="bg-white rounded-3xl p-8 max-w-lg w-full shadow-2xl" onclick="event.stopPropagation()">
+            <h2 class="text-2xl font-black text-indigo-900 mb-6">Built-in Formula Pop-up</h2>
+            <div class="space-y-4">
+                <div class="p-4 bg-indigo-50 rounded-xl">
+                    <p class="text-xs font-bold text-indigo-500 uppercase mb-1">Slope-Intercept Form</p>
+                    <p class="text-lg font-mono">$$y = mx + c$$</p>
+                </div>
+                <div class="p-4 bg-slate-50 rounded-xl">
+                    <p class="text-xs font-bold text-slate-500 uppercase mb-1">Standard Form</p>
+                    <p class="text-lg font-mono">$$ax + by = k$$</p>
+                </div>
+                <div class="p-4 bg-slate-50 rounded-xl">
+                    <p class="text-xs font-bold text-slate-500 uppercase mb-1">Gradient (Slope)</p>
+                    <p class="text-lg font-mono">$$m = \frac{y_2 - y_1}{x_2 - x_1}$$</p>
+                </div>
+            </div>
+            <button onclick="toggleModal('formula-popup')" class="mt-8 w-full py-3 bg-indigo-600 text-white rounded-xl font-bold">Close</button>
+        </div>
+    </div>
+
+<script>
+/**
+ * CORE MATHS: SIMULTANEOUS EQUATIONS TERMINAL 
+ * Scripting for Tabs, Graphing, and 50-Question Mastery Quiz
+ */
+
+// --- TAB NAVIGATION ---
+function showTab(id) {
+    document.querySelectorAll('.tab-content').forEach(el => el.classList.remove('active'));
+    document.getElementById(id).classList.add('active');
+    window.scrollTo(0,0);
+}
+
+// --- GRAPH VISUALIZER LOGIC ---
+const m1Input = document.getElementById('m1');
+const c1Input = document.getElementById('c1');
+const m2Input = document.getElementById('m2');
+const c2Input = document.getElementById('c2');
+
+function updateGraph() {
+    const m1 = parseFloat(m1Input.value);
+    const c1 = parseFloat(c1Input.value);
+    const m2 = parseFloat(m2Input.value);
+    const c2 = parseFloat(c2Input.value);
+    document.getElementById('m1-val').innerText = m1;
+    document.getElementById('c1-val').innerText = c1;
+    document.getElementById('m2-val').innerText = m2;
+    document.getElementById('c2-val').innerText = c2;
+    
+    const scale = 20; 
+    const origin = 200;
+    const x1_start = -10, x1_end = 10;
+    
+    const y1_start = origin - (m1 * x1_start + c1) * scale;
+    const y1_end = origin - (m1 * x1_end + c1) * scale;
+    document.getElementById('svg-line-1').setAttribute('x1', origin + x1_start * scale);
+    document.getElementById('svg-line-1').setAttribute('y1', y1_start);
+    document.getElementById('svg-line-1').setAttribute('x2', origin + x1_end * scale);
+    document.getElementById('svg-line-1').setAttribute('y2', y1_end);
+
+    const y2_start = origin - (m2 * x1_start + c2) * scale;
+    const y2_end = origin - (m2 * x1_end + c2) * scale;
+    document.getElementById('svg-line-2').setAttribute('x1', origin + x1_start * scale);
+    document.getElementById('svg-line-2').setAttribute('y1', y2_start);
+    document.getElementById('svg-line-2').setAttribute('x2', origin + x1_end * scale);
+    document.getElementById('svg-line-2').setAttribute('y2', y2_end);
+
+    const diffM = m1 - m2;
+    const resultText = document.getElementById('intersection-point');
+    const dot = document.getElementById('svg-point');
+    
+    if (Math.abs(diffM) < 0.01) {
+        if (Math.abs(c1 - c2) < 0.01) { resultText.innerText = "Solution: Infinite (Overlapping)"; }
+        else { resultText.innerText = "Solution: None (Parallel)"; }
+        dot.setAttribute('opacity', '0');
+    } else {
+        const ix = (c2 - c1) / diffM;
+        const iy = m1 * ix + c1;
+        resultText.innerText = `Solution: (${ix.toFixed(2)}, ${iy.toFixed(2)})`;
+        dot.setAttribute('opacity', '1');
+        dot.setAttribute('cx', origin + ix * scale);
+        dot.setAttribute('cy', origin - iy * scale);
+    }
+}
+if(m1Input) [m1Input, c1Input, m2Input, c2Input].forEach(inp => inp.addEventListener('input', updateGraph));
+if(m1Input) updateGraph();
+
+// --- SCRATCHPAD LOGIC ---
+const canvas = document.getElementById('scratchpad');
+const ctx = canvas ? canvas.getContext('2d') : null;
+let drawing = false;
+function resizeCanvas() { if(canvas) { canvas.width = canvas.offsetWidth; canvas.height = canvas.offsetHeight; } }
+function toggleScratchpad() { 
+    const win = document.getElementById('scratchpad-window');
+    win.classList.toggle('hidden');
+    if(!win.classList.contains('hidden')) setTimeout(resizeCanvas, 50);
+}
+function getPos(e) {
+    const rect = canvas.getBoundingClientRect();
+    return { x: (e.clientX || (e.touches && e.touches[0].clientX)) - rect.left, 
+             y: (e.clientY || (e.touches && e.touches[0].clientY)) - rect.top };
+}
+if(canvas) {
+    canvas.addEventListener('mousedown', (e) => { drawing = true; const p = getPos(e); ctx.beginPath(); ctx.moveTo(p.x, p.y); });
+    canvas.addEventListener('mousemove', (e) => { if(!drawing) return; const p = getPos(e); ctx.lineTo(p.x, p.y); ctx.stroke(); });
+    canvas.addEventListener('mouseup', () => drawing = false);
+}
+function clearScratchpad() { if(ctx) ctx.clearRect(0, 0, canvas.width, canvas.height); }
+function toggleModal(id) { document.getElementById(id).classList.toggle('hidden'); }
+
+// --- QUIZ DATA & LOGIC ---
+const quizData = [
+    { id: 1, dok: 1, type: 'mcq', q: "Which of the following is a pair of linear simultaneous equations?", options: ["$x + y = 5; x^2 + y = 2$", "$2x - 3y = 7; 4x + y = 1$", "$xy = 6; x + y = 5$", "$y = 3x^2 + 2; y = x$"], answer: 1, explain: "Linear equations must have variables with power 1 and no xy products." },
+    { id: 2, dok: 1, type: 'mcq', q: "To solve $3x - y = 10$ and $x + y = 6$ by elimination, which operation is most direct?", options: ["Multiply equation 2 by 3", "Subtract equation 2 from equation 1", "Add equation 1 and equation 2", "Square both equations"], answer: 2, explain: "Adding eliminates -y and +y immediately." },
+    { id: 3, dok: 1, type: 'mcq', q: "If $x + y = 10$ and $x - y = 2$, what is the value of $x$?", options: ["4", "6", "8", "12"], answer: 1, explain: "Add both: $2x=12 \\rightarrow x=6$." },
+    { id: 4, dok: 1, type: 'mcq', q: "In the equation $ax + by = c$, what are $x$ and $y$ called?", options: ["Constants", "Coefficients", "Variables", "Intercepts"], answer: 2, explain: "x and y are the unknowns." },
+    { id: 5, dok: 1, type: 'mcq', q: "If a system of two linear equations has graphs that are parallel, how many solutions exist?", options: ["One", "Two", "None", "Infinitely many"], answer: 2, explain: "Parallel lines never meet." },
+    { id: 6, dok: 1, type: 'mcq', q: "Condition for $y = mx + c$ and $y = nx + d$ to have a unique solution:", options: ["$m = n$", "$c = d$", "$m \\neq n$", "$m + n = 0$"], answer: 2, explain: "Slopes must be different for intersection." },
+    { id: 7, dok: 1, type: 'mcq', q: "Solve for $y$ in $2x + y = 7$ if $x = 3$.", options: ["1", "4", "10", "13"], answer: 0, explain: "$2(3)+y=7 \\rightarrow 6+y=7 \\rightarrow y=1$." },
+    { id: 8, dok: 1, type: 'mcq', q: "First step in solving $y = 2x$ and $3x + y = 10$ using substitution?", options: ["Replace x with 2y", "Replace y with 2x in the 2nd eq", "Multiply 1st eq by 3", "Subtract y"], answer: 1, explain: "Replace the variable with its known value/expression." },
+    { id: 9, dok: 1, type: 'mcq', q: "If $2a + b = 5$ and $a = 2$, find $b$.", options: ["1", "9", "-1", "3"], answer: 0, explain: "$2(2)+b=5 \\rightarrow 4+b=5 \\rightarrow b=1$." },
+    { id: 10, dok: 1, type: 'mcq', q: "Most suitable method for $x^2 + y^2 = 25$ and $y - x = 1$?", options: ["Elimination", "Substitution", "Log table", "Difference of squares"], answer: 1, explain: "Linear-quadratic systems favor substitution." },
+    { id: 11, dok: 1, type: 'mcq', q: "Value of $k$ if $(2, 1)$ solves $kx + 3y = 7$.", options: ["1", "2", "3", "5"], answer: 1, explain: "$k(2)+3(1)=7 \\rightarrow 2k=4 \\rightarrow k=2$." },
+    { id: 12, dok: 1, type: 'mcq', q: "If $x + 2y = 8$ and $x + 2y = 10$, the system is:", options: ["Consistent", "Inconsistent", "Linear-Quadratic", "Exponential"], answer: 1, explain: "They are parallel lines with different constants." },
+    { id: 13, dok: 1, type: 'mcq', q: "Express $x$ in terms of $y$: $3x - 2y = 6$.", options: ["$x = \\frac{6-2y}{3}$", "$x = \\frac{6+2y}{3}$", "$x = 2y + 2$", "$x = 2y - 6$"], answer: 1, explain: "$3x = 6+2y \\rightarrow x=(6+2y)/3$." },
+    { id: 14, dok: 1, type: 'mcq', q: "Value of $x + y$ if $2x + 2y = 20$?", options: ["5", "10", "20", "40"], answer: 1, explain: "Divide whole eq by 2." },
+    { id: 15, dok: 1, type: 'mcq', q: "If $y = 5$ and $x + y = 2$, find $x$.", options: ["3", "-3", "7", "-7"], answer: 1, explain: "$x + 5 = 2 \\rightarrow x = -3$." },
+    { id: 16, dok: 2, type: 'mcq', q: "Solve: $3x + 2y = 12$ and $5x - 2y = 4$.", options: ["(2, 3)", "(3, 2)", "(1, 4.5)", "(4, 0)"], answer: 0, explain: "Add: $8x=16 \\rightarrow x=2, y=3$." },
+    { id: 17, dok: 2, type: 'mcq', q: "Intersection of $y = 2x - 1$ and $y = 3x - 4$.", options: ["(3, 5)", "(5, 3)", "(2, 3)", "(1, 1)"], answer: 0, explain: "$2x-1 = 3x-4 \\rightarrow x=3, y=5$." },
+    { id: 18, dok: 2, type: 'mcq', q: "If $2x + 3y = 13$ and $x - 2y = -4$, find $x + y$.", options: ["3", "4", "5", "7"], answer: 2, explain: "$x=2, y=3$. Sum is 5." },
+    { id: 19, dok: 2, type: 'mcq', q: "Woman is 3x daughter. In 12 years, she is 2x. Daughter's current age?", options: ["10", "12", "15", "18"], answer: 1, explain: "$w=3d; w+12=2(d+12) \\rightarrow d=12$." },
+    { id: 20, dok: 2, type: 'mcq', q: "Solve: $\\frac{x}{2} + \\frac{y}{3} = 5$ and $x - y = 1$.", options: ["$x=6, y=5$", "$x=6.4, y=5.4$", "$x=5, y=4$", "$x=4, y=3$"], answer: 1, explain: "$3x+2y=30$. Substitute $x=y+1 \\rightarrow 5y+3=30 \\rightarrow y=5.4, x=6.4$." },
+    { id: 21, dok: 2, type: 'mcq', q: "Find value of $xy$ if $x+y=7$ and $x-y=3$.", options: ["10", "21", "4", "10"], answer: 0, explain: "$x=5, y=2. 5\\times2=10$." },
+    { id: 22, dok: 2, type: 'mcq', q: "Solve $2^x \\cdot 2^y = 8$ and $2x - y = 0$.", options: ["x=1, y=2", "x=2, y=1", "x=1, y=1", "x=3, y=0"], answer: 0, explain: "$x+y=3$ and $y=2x$. Substitute: $3x=3 \\rightarrow x=1, y=2$." },
+    { id: 23, dok: 2, type: 'mcq', q: "Sum is 20, difference is 4. Find the numbers.", options: ["10, 10", "12, 8", "14, 6", "11, 9"], answer: 1, explain: "$x+y=20, x-y=4 \\rightarrow x=12, y=8$." },
+    { id: 24, dok: 2, type: 'mcq', q: "If $x + y = 5$ and $x^2 - y^2 = 15$, find $x - y$.", options: ["2", "3", "5", "10"], answer: 1, explain: "$(x+y)(x-y)=15 \\rightarrow 5(x-y)=15 \\rightarrow 3$." },
+    { id: 25, dok: 2, type: 'mcq', q: "Solve $3x - 4y = 1$ and $7x + 3y = 21$.", options: ["x=3, y=2", "x=2, y=3", "x=1, y=4", "x=2.3, y=1.5"], answer: 0, explain: "Using elimination: x=3, y=2." },
+    { id: 26, dok: 2, type: 'mcq', q: "30 heads, 80 legs (chickens/goats). How many chickens?", options: ["10", "15", "20", "25"], answer: 2, explain: "$c+g=30; 2c+4g=80 \\rightarrow 2c=40 \\rightarrow c=20$." },
+    { id: 27, dok: 2, type: 'mcq', q: "Find $p, q$ if $2p - q = 4$ and $p + q = 8$.", options: ["p=4, q=4", "p=6, q=2", "p=2, q=6", "p=5, q=3"], answer: 0, explain: "$3p=12 \\rightarrow p=4, q=4$." },
+    { id: 28, dok: 2, type: 'mcq', q: "Solve $y = x^2$ and $y = x + 2$.", options: ["(2, 4) and (-1, 1)", "(2, 4) and (1, 1)", "(-2, 4) and (1, 1)", "(0, 0) and (2, 4)"], answer: 0, explain: "$x^2-x-2=0 \\rightarrow (x-2)(x+1)=0$." },
+    { id: 29, dok: 2, type: 'mcq', q: "If $3x + y = 19$ and $x + 3y = 1$, find the mean of $x$ and $y$.", options: ["2.5", "3", "4", "5"], answer: 0, explain: "$x=7, y=-2$. Mean: $(7-2)/2 = 2.5$." },
+    { id: 30, dok: 2, type: 'mcq', q: "Gradient of line through origin and intersection of $x+y=3, x-y=1$.", options: ["0.5", "1", "2", "-1"], answer: 0, explain: "Intersection: (2,1). $m = 1/2 = 0.5$." },
+    { id: 31, dok: 3, type: 'mcq', q: "Find x and y for $x^2 - y^2 = 24$ and $x + y = 6$.", options: ["(5, 1)", "(4, 2)", "(6, 0)", "(7, -1)"], answer: 0, explain: "$(x-y)(6)=24 \\rightarrow x-y=4$. Solving gives (5,1)." },
+    { id: 32, dok: 3, type: 'mcq', q: "Hourly rates: 3K + 2M = 180, 2K + 5M = 230. Find Kofi's rate (K).", options: ["GH₵ 30", "GH₵ 40", "GH₵ 50", "GH₵ 60"], answer: 1, explain: "Solving gives $K=40, M=30$." },
+    { id: 33, dok: 3, type: 'mcq', q: "Two-digit sum 12. Reversed is 18 greater. Find number.", options: ["48", "57", "39", "75"], answer: 1, explain: "$x+y=12; (10y+x) - (10x+y) = 18 \\rightarrow 57$." },
+    { id: 34, dok: 3, type: 'mcq', q: "Solve: $3^{x+y} = 81$ and $2^{2x-y} = 8$.", options: ["x=2, y=2", "x=2.33, y=1.67", "x=3, y=1", "x=1, y=3"], answer: 1, explain: "$x+y=4; 2x-y=3 \\rightarrow 3x=7$." },
+    { id: 35, dok: 3, type: 'mcq', q: "Cocoa farm: Perimeter 140m, Length = Width + 10. Area?", options: ["1000", "1200", "1500", "2000"], answer: 1, explain: "$2(2w+10)=140 \\rightarrow w=30, l=40$. Area: $1200$." },
+    { id: 36, dok: 3, type: 'mcq', q: "If $\\frac{2}{x} + \\frac{3}{y} = 1$ and $\\frac{3}{x} - \\frac{2}{y} = 8$, find $x$.", options: ["0.2", "0.5", "1", "2"], answer: 1, explain: "Let $u=1/x, v=1/y$. $u=2 \\rightarrow x=0.5$." },
+    { id: 37, dok: 3, type: 'mcq', q: "Solution to $2x - 3y = 6$ and $4x - 6y = 10$:", options: ["(3, 0)", "Infinite", "No solution", "(5, 0)"], answer: 2, explain: "Lines are parallel (same slope, different intercept)." },
+    { id: 38, dok: 3, type: 'mcq', q: "Analyze $ax + by = 14; bx + ay = 16$. If $x=2, y=1$, find $a$.", options: ["2", "4", "6", "8"], answer: 2, explain: "$2a+b=14; a+2b=16$. Solving: $a=6, b=2$." },
+    { id: 39, dok: 3, type: 'mcq', q: "Intersection point of $y = 2x+3$ and $x+y=6$:", options: ["(1, 5)", "(2, 4)", "(3, 3)", "(0, 6)"], answer: 0, explain: "$x+(2x+3)=6 \\rightarrow 3x=3 \\rightarrow x=1$." },
+    { id: 40, dok: 3, type: 'mcq', q: "What is the discriminant of $x^2-x-2=0$ (from solving $y=x^2, y=x+2$)?", options: ["1", "4", "9", "0"], answer: 2, explain: "$b^2-4ac = (-1)^2 - 4(1)(-2) = 1+8=9$." },
+    { id: 41, dok: 4, type: 'mcq', q: "Oshodi Fabric: Lace(L), Ankara(A). $5L+10A=450k$. New prices: $+10\\%L, -5\\%A$ costs $442.5k$. Original $L$?", options: ["₦30,000", "₦40,000", "₦50,000", "₦60,000"], answer: 1, explain: "$5.5L + 9.5A = 442500$. Solving gives $L=40,000$." },
+    { id: 42, dok: 4, type: 'mcq', q: "Equilibrium for $Q_s = 2P-10$ and $Q_d = 100-3P$:", options: ["P=20", "P=22", "P=25", "P=30"], answer: 1, explain: "$2P-10 = 100-3P \\rightarrow 5P=110 \\rightarrow P=22$." },
+    { id: 43, dok: 4, type: 'mcq', q: "NGO Boreholes: 8A + 6B = 14m. A is 20% higher than B. Cost of B?", options: ["₦0.9m", "₦1.0m", "₦0.8m", "₦1.2m"], answer: 0, explain: "$8(1.2B) + 6B = 14 \\rightarrow 15.6B=14 \\rightarrow B \\approx 0.9$." },
+    { id: 44, dok: 4, type: 'mcq', q: "Flare $y = -x^2+8x$ meets hill $y=x$ at (0,0) and:", options: ["(7, 7)", "(4, 4)", "(8, 8)", "(1, 1)"], answer: 0, explain: "$-x^2+8x=x \\rightarrow x^2-7x=0 \\rightarrow x=7$." },
+    { id: 45, dok: 4, type: 'mcq', q: "20 buses (Sprinter 20 seats, Luxury 50). Total 640 fans. Luxury buses used?", options: ["6", "8", "10", "12"], answer: 1, explain: "$20s+50(20-s)=640 \\rightarrow -30s = -360 \\rightarrow s=12, l=8$." },
+    { id: 46, dok: 4, type: 'mcq', q: "WAEC Candidates: Bio + Chem = 500. Bio+10%, Chem-5% = 505. Original Bio?", options: ["200", "250", "300", "350"], answer: 0, explain: "$1.1b + 0.95(500-b) = 505 \\rightarrow 0.15b = 30 \\rightarrow 200$." },
+    { id: 47, dok: 4, type: 'mcq', q: "Accra Plot: Perimeter 24, Sides $x, x+2, y$. If triangle is right-angled, find $x$.", options: ["6", "8", "10", "12"], answer: 0, explain: "Standard 6, 8, 10 triangle meets all criteria." },
+    { id: 48, dok: 4, type: 'mcq', q: "Area of triangle formed by $y=x, y=-x+4$ and x-axis:", options: ["2", "4", "8", "16"], answer: 1, explain: "Vertices: (0,0), (4,0), (2,2). $Area = 0.5\\times4\\times2 = 4$." },
+    { id: 49, dok: 4, type: 'mcq', q: "If cost of Ajo tier A is twice B and total for 2A and 3B is 7000, find B.", options: ["1000", "2000", "1500", "500"], answer: 0, explain: "$2(2B) + 3B = 7000 \\rightarrow 7B=7000 \\rightarrow B=1000$." },
+    { id: 50, dok: 4, type: 'mcq', q: "Why is a linear model limited for population growth?", options: ["Population is constant", "Growth is usually exponential", "No variables in cities", "It is too accurate"], answer: 1, explain: "City growth accelerates over time (compounding)." }
+];
+
+let studentName = "";
+let currentIndex = 0;
+let score = 0;
+let userAnswers = new Array(50).fill(null);
+let dokScores = { 1: 0, 2: 0, 3: 0, 4: 0 };
+
+function saveNameAndStart() {
+    const input = document.getElementById("name-input");
+    if (!input || input.value.trim() === "") return;
+    studentName = input.value;
+    renderQuestion();
+}
+
+function renderQuestion() {
+    const container = document.getElementById("quiz-container");
+    const nextBtn = document.getElementById("next-btn");
+    const prevBtn = document.getElementById("prev-btn");
+
+    if (!studentName) {
+        container.innerHTML = `<div class="p-8 text-center bg-indigo-50 rounded-2xl border-2 border-indigo-100"><h3 class="text-2xl font-bold text-indigo-900 mb-4 uppercase">Terminal Entrance</h3><input type="text" id="name-input" placeholder="Full Name" class="w-full max-w-xs p-4 border-2 border-white rounded-xl mb-6 text-center shadow-sm"><br><button onclick="saveNameAndStart()" class="px-12 py-4 bg-indigo-600 text-white font-black rounded-xl shadow-lg">START EXAM</button></div>`;
+        if(nextBtn) nextBtn.style.display = "none";
+        if(prevBtn) prevBtn.style.display = "none";
+        return;
+    }
+
+    if (currentIndex >= quizData.length) { showFinalResults(); return; }
+
+    const q = quizData[currentIndex];
+    const answered = userAnswers[currentIndex] !== null;
+
+    document.getElementById("progress-bar").style.width = `${((currentIndex + 1) / 50) * 100}%`;
+    document.getElementById("progress-text").innerText = `${currentIndex + 1}/50`;
+
+    container.innerHTML = `
+        <div class="space-y-6">
+            <div class="flex justify-between items-center"><span class="bg-indigo-900 text-white px-3 py-1 rounded text-xs font-bold">QUESTION ${q.id}</span><span class="dok-badge dok-${q.dok}">DOK LEVEL ${q.dok}</span></div>
+            <p class="text-xl font-bold text-slate-800 leading-snug">${q.q}</p>
+            <div class="grid gap-3">
+                ${q.options.map((opt, i) => {
+                    let style = "border-slate-200 hover:border-indigo-300";
+                    if (answered) {
+                        if (i === q.answer) style = "border-green-500 bg-green-50 text-green-700 font-bold";
+                        else if (i === userAnswers[currentIndex]) style = "border-red-500 bg-red-50 text-red-700";
+                        else style = "opacity-40 border-slate-100";
+                    }
+                    return `<button onclick="handleSelect(${i})" ${answered ? 'disabled' : ''} class="text-left p-4 rounded-xl border-2 transition-all flex items-start gap-4 ${style}"><span>${String.fromCharCode(65+i)}.</span> <span>${opt}</span></button>`;
+                }).join('')}
+            </div>
+            ${answered ? `<div class="p-5 rounded-xl border-2 bg-slate-50 text-sm"><p class="font-bold uppercase mb-1">Explanation:</p><p>${q.explain}</p></div>` : ''}
+        </div>`;
+
+    if(nextBtn) { nextBtn.style.display = "block"; nextBtn.disabled = !answered; }
+    if(prevBtn) { prevBtn.style.display = "block"; prevBtn.disabled = currentIndex === 0; }
+    if (window.MathJax) MathJax.typesetPromise();
+}
+
+function handleSelect(index) {
+    if (userAnswers[currentIndex] !== null) return;
+    const q = quizData[currentIndex];
+    userAnswers[currentIndex] = index;
+    if (index === q.answer) {
+        score++;
+        dokScores[q.dok]++;
+        updateDOKDisplay();
+    }
+    renderQuestion(); 
+}
+
+function updateDOKDisplay() {
+    for (let i = 1; i <= 4; i++) {
+        const el = document.getElementById(`dok${i}-score`);
+        if(el) {
+            const total = (i <= 2) ? 15 : 10;
+            el.innerText = `${dokScores[i]}/${total}`;
+        }
+    }
+}
+
+function nextQuestion() { currentIndex++; renderQuestion(); }
+function prevQuestion() { if(currentIndex > 0) { currentIndex--; renderQuestion(); } }
+
+function triggerPrint() {
+    window.print();
+}
+
+function showFinalResults() {
+    const percent = Math.round((score / 50) * 100);
+    const grade = percent >= 80 ? "A1" : percent >= 70 ? "B2" : percent >= 60 ? "C4" : percent >= 50 ? "C6" : "F9";
+    
+    // Update the new elements
+    document.getElementById('student-name-output').innerText = studentName;
+    document.getElementById('cert-score-badge').innerText = `${score}/50`;
+    document.getElementById('cert-grade-badge').innerText = grade;
+    
+    // Set the current date automatically
+    document.getElementById('cert-date').innerText = new Date().toLocaleDateString('en-US', { 
+        year: 'numeric', 
+        month: 'long', 
+        day: 'numeric' 
+    });
+    
+    document.getElementById('certificate-modal').classList.remove('hidden');
+}
+
+
+window.onload = function() {
+    updateDOKDisplay();
+    renderQuestion();
+};
+</script>
+</body>
+</html>
